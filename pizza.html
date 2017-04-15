@@ -1,0 +1,162 @@
+<script src="https://unpkg.com/vue"></script>
+
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Zadanie 4 - usuwanie danych</title>
+
+    <!-- bootstrap -->
+    <script src="js/bootstrap.min.js"></script>
+
+    <!-- css -->
+    <link href="css/bootstrap.min.css" type="text/css" rel="stylesheet">
+    <link href="css/style.css" type="text/css" rel="stylesheet">
+
+</head>
+
+<body>
+
+
+  <div id="avaliableComponents">
+    <button v-for="component in allComponents" class="btn btn-success btn-component" v-on:click="selectComponent(component.pizza)">
+      {{component.pizza}}
+    </button>
+
+  </div>
+
+  <ul id="app">
+    <li v-for="pizza in pizzas" v-if="!pizza.visible">
+      {{pizza.name}} - {{pizza.components}} - cena: {{pizza.price}}
+    </li>
+  </ul>
+
+  <ul id="selected">
+    <li v-for="selected in selectedComponents">
+      {{selected.selected}}
+    </li>
+  </ul>
+
+
+
+  <script src="https://unpkg.com/vue"></script>
+  <script>
+
+  function compareArray(mainArray, compareArr) {
+          var mach = true;
+          if ( mainArray.indexOf(compareArr) === -1 ){
+                  match = false;
+                  return match;
+          }
+          return match;
+      }
+
+
+
+
+      var pizzaArray = [];
+      var pizza = {
+          visible: true,
+          name: "",
+          price: 0,
+          components:[]
+      };
+      var Pizza = function(name,price,  components){
+          this.name = name;
+          this.price = price;
+          this.components = components;
+      }
+      var selectedComponentsArray = [
+      {pizza: "mozarella", selected : false},
+      {pizza: "tomSouce", selected : false},
+      {pizza: "oregano", selected : false},
+      {pizza: "ham", selected : false},
+      {pizza: "peperoni", selected : false},
+      {pizza: "mushrooms", selected : false},
+      {pizza: "garlic", selected : false},
+      {pizza: "onion", selected : false}
+      ]
+
+      var mozarella = new Pizza("mozarella", 19.99, ["mozarella", "tomSouce", "oregano"]);
+      pizzaArray.push(mozarella);
+      var roma = new Pizza("roma", 24.99,  ["mozarella", "tomSouce", "ham", "peperoni", "mushrooms"]);
+      pizzaArray.push(roma);
+/*
+      var checkPizzas = function(){
+          var componentsToCheck= [];
+          var selectedComponentsArrayLength = selectedComponentsArray.length
+          console.log("96"+ " selectedComponentsArrayLength =" +selectedComponentsArrayLength);
+          for(i=0;i<selectedComponentsArrayLength;i++){
+            if(selectedComponentsArray[i].selected){
+              componentsToCheck.push(selectedComponentsArray[i].pizza);
+            }
+          }
+          var pizzaArrayLength = pizzaArray.length;
+          console.log("102"+ " selectedComponentsArrayLength =" +pizzaArrayLength);
+        for(j=0;j<pizzaArrayLength;j++){
+          var pizzaComponents = pizzaArray[j].components;
+          if( compareArray(pizzaComponents, componentsToCheck) ){
+            pizzaArray[j].visible = true;
+          } else {
+            pizzaArray[j].visible = false;
+          }
+        }
+      }
+*/
+    //"mozarella", "mushrooms", "ham", "peperoni", "corn"
+
+
+    var checkPizzas2 = function(pizzaComponent, ifSelected){
+      var pizzaArrayLength = pizzaArray.length;
+
+        for(i=0; i<pizzaArrayLength; i++){
+          if( compareArray(pizzaArray[i].components, pizzaComponent) ){
+            pizzaArray[i].visible = !ifSelected;
+          }
+        }
+    }
+
+      var app = new Vue({
+          el: '#app',
+          data: {
+              pizzas: pizzaArray
+          }
+      });
+
+      var app = new Vue({
+        el: '#selected',
+        data:{
+          selectedComponents: selectedComponentsArray
+        }
+      })
+
+
+      var app = new Vue({
+        el: '#avaliableComponents',
+        data: {
+          allComponents: selectedComponentsArray
+        },
+        methods: {
+          selectComponent: function(selectedComponent){
+              for (i = 0; i < selectedComponentsArray.length; i++){
+                if( this.allComponents[i].pizza == selectedComponent ){
+                  this.allComponents[i].selected = !this.allComponents[i].selected;
+                  //checkPizzas();
+                  if(this.allComponents[i].selected){
+                    checkPizzas2(this.allComponents[i].pizza, this.allComponents[i].selected);
+                  }
+                }
+              }
+
+          }
+        }
+      })
+  </script>
+<script src="https://unpkg.com/vue"></script>
+</body>
+
+</html>
