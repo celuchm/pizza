@@ -21,18 +21,17 @@
 
 <body>
 
-<script>
-  console.time('selectComponent');
-</script>
-  <div id="avaliableComponents">
-    <button v-for="component in allComponents" class="btn btn-success btn-component" v-on:click="selectComponent(component.pizza)">
-      {{component.pizza}}
-    </button>
 
+<div class="component">
+  <div class="row">
+    <div id="avaliableComponents">
+      <button v-for="component in allComponents" class="btn" v-bind:class="[{'btn-default': component.selected}, {'btn-info': !component.selected}]" v-on:click="selectComponent(component.pizzaComponent)">
+        {{component.pizzaComponent}}
+      </button>
+    </div>
   </div>
-<script>
-  console.timeEnd('selectComponent');
-</script>
+
+
   <ul id="pizzas">
     <li v-for="pizza in pizzas" v-if="pizza.visible">
       {{pizza.name}} - {{pizza.components}} - cena: {{pizza.price}} - visible: {{pizza.visible}}
@@ -46,6 +45,8 @@
   </ul>
 
 <hr />
+
+</div>
 
 
 
@@ -80,16 +81,16 @@
           this.components = components;
       }
       var selectedComponentsArray = [
-      {pizza: "mozarella", selected : false},
-      {pizza: "tomSouce", selected : false},
-      {pizza: "oregano", selected : false},
-      {pizza: "ham", selected : false},
-      {pizza: "peperoni", selected : false},
-      {pizza: "mushrooms", selected : false},
-      {pizza: "garlic", selected : false},
-      {pizza: "onion", selected : false},
-      {pizza: "ananas", selected : false},
-      {pizza: "oliwki", selected : false}
+      {pizzaComponent: "mozarella", selected : false},
+      {pizzaComponent: "tomSouce", selected : false},
+      {pizzaComponent: "oregano", selected : false},
+      {pizzaComponent: "ham", selected : false},
+      {pizzaComponent: "peperoni", selected : false},
+      {pizzaComponent: "mushrooms", selected : false},
+      {pizzaComponent: "garlic", selected : false},
+      {pizzaComponent: "onion", selected : false},
+      {pizzaComponent: "ananas", selected : false},
+      {pizzaComponent: "oliwki", selected : false}
       ]
 /*
       var mozarella = new Pizza("mozarella", 19.99, [ "tomSouce", "oregano"]);
@@ -149,13 +150,13 @@
               ]
           },
           methods: {
-            checkPizzas: function(){
+              checkPizzas: function(){
                 var componentsToCheck= [];
                 var selectedComponentsArrayLength = selectedComponentsArray.length
                 //console.log("selectedComponentsArrayLength =" +selectedComponentsArrayLength);
                 for(i=0;i<selectedComponentsArrayLength;i++){
                   if(selectedComponentsArray[i].selected){
-                    componentsToCheck.push(selectedComponentsArray[i].pizza);
+                    componentsToCheck.push(selectedComponentsArray[i].pizzaComponent);
                   }
                 }
                 var pizzaArrayLength = pizzas.pizzas.length;
@@ -178,6 +179,7 @@
         el: '#selected',
         data:{
           selectedComponents: selectedComponentsArray
+
         }
       })
 
@@ -185,13 +187,29 @@
       var avaliableComponents = new Vue({
         el: '#avaliableComponents',
         data: {
-          allComponents: selectedComponentsArray
+          allComponents: selectedComponentsArray,
+          buttonClass: "btn",
+          buttonComponentClass: "btn-component",
+          buttonInfoClass: "btn-info",
+          buttonDefaultClass: "btn-default"
+        },
+        computed: {
+          bindClass: function(idex){
+            var className = "";
+            if(this.allComponents[index].selected){
+                className = "btn-default";
+            } else {
+                className = "btn-info";
+            }
+            return className;
+          }
         },
         methods: {
           selectComponent: function(selectedComponent){
               for (i = 0; i < selectedComponentsArray.length; i++){
-                if( this.allComponents[i].pizza == selectedComponent ){
-                  this.allComponents[i].selected = !this.allComponents[i].selected;
+                if( this.allComponents[i].pizzaComponent == selectedComponent ){
+                //  this.allComponents[i].selected = !this.allComponents[i].selected;
+                Vue.set(this.allComponents[i], 'selected', !this.allComponents[i].selected);
                 }
               }
             pizzas.checkPizzas();
