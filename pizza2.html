@@ -22,7 +22,7 @@
 <body>
 
 
-<div class="component">
+<div class="container">
   <div class="row">
     <div id="avaliableComponents">
       <button v-for="component in allComponents" class="btn" v-bind:class="[{'btn-default': component.selected}, {'btn-info': !component.selected}]" v-on:click="selectComponent(component.pizzaComponent)">
@@ -34,7 +34,10 @@
 
   <ul id="pizzas">
     <li v-for="pizza in pizzas" v-if="pizza.visible">
-      {{pizza.name}} - {{pizza.components}} - cena: {{pizza.price}} - visible: {{pizza.visible}}
+      <strong>{{pizza.name}}</strong> |
+        <span v-for="comp in pizza.components">
+          {{comp}} |
+        </span>
     </li>
   </ul>
 <hr />
@@ -81,16 +84,36 @@
           this.components = components;
       }
       var selectedComponentsArray = [
-      {pizzaComponent: "mozarella", selected : false},
-      {pizzaComponent: "tomSouce", selected : false},
-      {pizzaComponent: "oregano", selected : false},
-      {pizzaComponent: "ham", selected : false},
-      {pizzaComponent: "peperoni", selected : false},
-      {pizzaComponent: "mushrooms", selected : false},
-      {pizzaComponent: "garlic", selected : false},
-      {pizzaComponent: "onion", selected : false},
-      {pizzaComponent: "ananas", selected : false},
-      {pizzaComponent: "oliwki", selected : false}
+        {pizzaComponent: "sos pomidorowy", selected: false},
+   {pizzaComponent: "mozzarella", selected: false},
+   {pizzaComponent: "szynka", selected: false},
+   {pizzaComponent: "pieczarki", selected: false},
+   {pizzaComponent: "kiełbasa", selected: false},
+   {pizzaComponent: "cebula", selected: false},
+   {pizzaComponent: "kukurydza", selected: false},
+   {pizzaComponent: "papryka", selected: false},
+   {pizzaComponent: "groszek", selected: false},
+   {pizzaComponent: "ananas", selected: false},
+   {pizzaComponent: "karczochy", selected: false},
+   {pizzaComponent: "czarne oliwki", selected: false},
+   {pizzaComponent: "tuńczyk", selected: false},
+   {pizzaComponent: "owoce morza", selected: false},
+   {pizzaComponent: "camembert", selected: false},
+   {pizzaComponent: "gouda", selected: false},
+   {pizzaComponent: "feta", selected: false},
+   {pizzaComponent: "krewetki", selected: false},
+   {pizzaComponent: "cukinia", selected: false},
+   {pizzaComponent: "świeży pomidor", selected: false},
+   {pizzaComponent: "ser", selected: false},
+   {pizzaComponent: "filety z sardeli", selected: false},
+   {pizzaComponent: "becon", selected: false},
+   {pizzaComponent: "salami", selected: false},
+   {pizzaComponent: "kurczak wędzony", selected: false},
+   {pizzaComponent: "peperoncino", selected: false},
+   {pizzaComponent: "czosnek", selected: false},
+   {pizzaComponent: "brokuły", selected: false},
+   {pizzaComponent: "gyros", selected: false},
+   {pizzaComponent: "peperoni łagodne", selected: false}
       ]
 /*
       var mozarella = new Pizza("mozarella", 19.99, [ "tomSouce", "oregano"]);
@@ -144,9 +167,28 @@
           el: '#pizzas',
           data: {
               pizzas: [
-                {"name": "mozarella", "price": 19.99, "components": [ "tomSouce", "oregano"], "visible": true },
-                {"name": "roma", "price": 24.99, "components": [ "tomSouce", "ham", "peperoni", "mushrooms"], "visible": true },
-                {"name": "capriciosa", "price": 30, "components": [ "tomSouce", "ham", "onion", "garlic"], "visible": true }
+                        {name: "MARGHERITA", priceSm: 9, priceBig: 12, priceFm:17  , "components": [ "sos pomidorowy", "mozzarella"], visible: true },
+                        {name: "GATTO NERO", priceSm: 9, priceBig: 12, priceFm:17  , "components": [ "sos pomidorowy", "mozzarella", "szynka", "pieczarki", "kiełbasa", "cebula" ], visible: true },
+                        {name: "VEGETARIANA", priceSm: 9, priceBig: 12, priceFm:17  , "components": [ "sos pomidorowy", "mozzarella" , "pieczarki", "kukurydza", "papryka", "groszek"], visible: true },
+                        {name: "TROPICANA", priceSm: 9, priceBig: 12, priceFm:17  , "components": [ "sos pomidorowy", "mozzarella" , "ananas", "szynka", "kukurydza"], visible: true },
+                        {name: "CAPRICCIOSA", priceSm: 9, priceBig: 12, priceFm:17  , "components": [ "sos pomidorowy", "mozzarella" , "szynka", "karczochy", "pieczarki", "czarne oliwki"], visible: true },
+                        {name: "TONNO", priceSm: 9, priceBig: 12, priceFm:17  , "components": [ "sos pomidorowy", "mozzarella" , "tuńczyk", "cebula", "groszek"], visible: true },
+                        {name: "FRUTTI DI MARE", priceSm: 9, priceBig: 12, priceFm:17  , "components": [ "sos pomidorowy", "mozzarella" , "owoce morza"], visible: true },
+                        {name: "QUATTRO FORMAGGI", priceSm: 9, priceBig: 12, priceFm:17  , "components": [ "sos pomidorowy", "mozzarella" , "camembert", "gouda", "feta"], visible: true },
+                        {name: "GAMBERETTO", priceSm: 9, priceBig: 12, priceFm:17  , "components": [ "sos pomidorowy", "mozzarella" , "krewetki", "cukinia"], visible: true },
+                        {name: "PRIMAVERA", priceSm: 9, priceBig: 12, priceFm:17  , "components": [ "sos pomidorowy", "mozzarella" , "świeży pomidor", "ser"], visible: true },
+                        {name: "NAPOLI", priceSm: 9, priceBig: 12, priceFm:17  , "components": [ "sos pomidorowy", "mozzarella" , "filety z sardeli", "czarne oliwki", "papryka", "groszek"], visible: true },
+                        {name: "BECON", priceSm: 9, priceBig: 12, priceFm:17  , "components": [ "sos pomidorowy", "mozzarella" , "becon", "cebula", "papryka"], visible: true },
+                        {name: "SICILIANA", priceSm: 9, priceBig: 12, priceFm:17  , "components": [ "sos pomidorowy", "mozzarella" , "salami", "pieczarki", "papryka"], visible: true },
+                        {name: "POLLO", priceSm: 9, priceBig: 12, priceFm:17  , "components": [ "sos pomidorowy", "mozzarella" , "kurczak wędzony", "kukurydza", "ananas"], visible: true },
+                        {name: "HOT CHILI", priceSm: 9, priceBig: 12, priceFm:17  , "components": [ "sos pomidorowy", "mozzarella" , "salami", "papryka", "peperoncino", "cebula"], visible: true },
+                        {name: "VEGETARIANA", priceSm: 9, priceBig: 12, priceFm:17  , "components": [ "sos pomidorowy", "mozzarella" , "pieczarki", "kukurydza", "papryka", "groszek"], visible: true },
+                        {name: "BELLA",  priceSm: 9, priceBig: 12, priceFm:17  , "components": [ "sos pomidorowy", "mozzarella", "szynka", "salami", "becon", "pieczarki", "cebula", "czosnek" ], visible: true },
+                        {name: "CALZONE", priceSm: 9, priceBig: 12, priceFm:17  , "components": [ "sos pomidorowy", "mozzarella" , "pieczarki", "szynka"], visible: true },
+                        {name: "BROCCOLI", priceSm: 9, priceBig: 12, priceFm:17  , "components": [ "sos pomidorowy", "mozzarella" , "salami", "brokuły", "feta", "groszek"], visible: true },
+                        {name: "GYROS", priceSm: 9, priceBig: 12, priceFm:17  , "components": [ "sos pomidorowy", "mozzarella" , "gyros", "pieczarki", "cebula"], visible: true },
+                        {name: "POLLO II", priceSm: 9, priceBig: 12, priceFm:17  , "components": [ "sos pomidorowy", "mozzarella" , "kurczak wędzony", "pieczarki", "brokuły", "czosnek"], visible: true },
+                        {name: "DIAVOLA", priceSm: 9, priceBig: 12, priceFm:17  , "components": [ "sos pomidorowy", "mozzarella" , "kurczak wędzony", "peperoni łagodne", "peperoncino", "cebula"], visible: true }
               ]
           },
           methods: {
